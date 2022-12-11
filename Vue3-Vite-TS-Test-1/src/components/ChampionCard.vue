@@ -6,7 +6,7 @@
       </div>
     </router-link>
 </template>
-  
+
 <script setup lang="ts">
 import type { PropType } from 'vue'
 import type { Champion } from '../types/Champion'

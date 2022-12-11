@@ -13,9 +13,9 @@ import type { Ref } from 'vue'
 import type { Champions } from '../types/Champions'
 import ChampionCard from '../components/ChampionCard.vue'
 
-let champions = ref({}) as Ref<Champions>
+const champions = ref({}) as Ref<Champions>
 
-function getAllChampions() {
+function getAllChampions (): void {
   ChampionService.getAllChampions()
     .then((response: { data: Champions }) => {
       champions.value = response.data
@@ -26,7 +26,7 @@ function getAllChampions() {
 }
 
 onMounted(() => {
-   getAllChampions()
+  getAllChampions()
 })
 
 </script>

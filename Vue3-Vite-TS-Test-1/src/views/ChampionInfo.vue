@@ -35,10 +35,10 @@ import type { ChampionById } from '../types/ChampionById'
 
 const baseURL = 'https://ddragon.leagueoflegends.com/cdn/12.22.1/img/champion/'
 const imgExtension = '.png'
-let champion: Ref<ChampionById> = {} as Ref<ChampionById>
-let championName = "" 
-let imageURL = ""
-let championAttributes = ref({})
+const champion = ref({}) as Ref<ChampionById>
+let championName = ''
+let imageURL = ''
+const championAttributes = ref({})
 
 const props = defineProps({
   id: {
@@ -47,24 +47,24 @@ const props = defineProps({
   }
 })
 
-function getChampionById(id: string) {
-  ChampionService.getChampionById (id)
+function getChampionById (id: string): void {
+  ChampionService.getChampionById(id)
     .then((response: { data: ChampionById }) => {
       champion.value = response.data
-      fetchChampionProperties (Object.keys(champion.value.data)[0])
+      fetchChampionProperties(Object.keys(champion.value.data)[0])
     })
     .catch((error: any) => {
       console.log(error)
     })
 }
 
-function fetchChampionProperties (championKey: string) {
+function fetchChampionProperties (championKey: string): void {
   championName = champion.value.data[championKey].id
   imageURL = baseURL + championName + imgExtension
   championAttributes.value = champion.value.data[championKey].stats
 }
 
-function goBack () {
+function goBack (): any {
   return window.history.back()
 }
 

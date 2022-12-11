@@ -1,6 +1,4 @@
 export interface Champion {
-  id: string,
+  id: string
   name: string
 }
-
-
