@@ -31,11 +31,11 @@
 import { onBeforeMount, ref } from 'vue'
 import ChampionService from '../services/ChampionService'
 import type { Ref } from 'vue'
-import type { Champion } from '../types/Champion'
+import type { ChampionById } from '../types/ChampionById'
 
 const baseURL = 'https://ddragon.leagueoflegends.com/cdn/12.22.1/img/champion/'
 const imgExtension = '.png'
-let champion: Ref<Champion> = {} as Ref<Champion>
+let champion: Ref<ChampionById> = {} as Ref<ChampionById>
 let championName = "" 
 let imageURL = ""
 let championAttributes = ref({})
@@ -49,7 +49,7 @@ const props = defineProps({
 
 function getChampionById(id: string) {
   ChampionService.getChampionById (id)
-    .then((response: { data: Champion }) => {
+    .then((response: { data: ChampionById }) => {
       champion.value = response.data
       fetchChampionProperties (Object.keys(champion.value.data)[0])
     })
