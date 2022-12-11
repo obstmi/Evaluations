@@ -10,7 +10,7 @@
   <script lang="ts">
   import { defineComponent } from "vue";
   export default defineComponent({
-    name: "ChampionCard.vue",
+    name: "ChampionCard",
     props: {
       champion: {
         type: Object,

@@ -10,11 +10,11 @@
         </svg>
       </button>
     </div>
-    <h1>{{ showName }}</h1>
-    <img :src="baseURL + showName + imgExtension" :alt="showName">
+    <h1>{{ championName }}</h1>
+    <img :src="imageURL" :alt="championName">
     <div class="statTable">
       <table>
-        <tr v-for="(value, stat, index) in getChampionAttribute" :key="index">
+        <tr v-for="(value, stat, index) in championAttributes " :key="index">
           <th>
             {{ stat }}
           </th>
@@ -27,47 +27,49 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
+import { onBeforeMount, ref } from 'vue'
 import ChampionService from '../services/ChampionService'
-export default {
-  name: 'ChampionInfo',
-  props: ['id'],
-  data () {
-    return {
-      champion: {},
-      baseURL: 'https://ddragon.leagueoflegends.com/cdn/12.22.1/img/champion/',
-      imgExtension: '.png',
-      championInfo: {}
-    }
-  },
-  created () {
-    ChampionService.getChampionById(this.id)
-        .then(response => {
-          this.champion = response.data
-        })
-        .catch(error => {
-          console.log(error)
-        })
-  },
-  methods: {
-    goBack () {
-      return window.history.back()
-    }
-  },
-  computed: {
-    showName () {
-      for (let id in this.champion.data) {
-        if (id === Object.values(this.champion.data)[0].id) {
-          return id
-        }
-      }
-    },
-    getChampionAttribute () {
-      if (this.champion.data) {
-        ({stats: this.championInfo} = Object.values(this.champion.data)[0]);
-        return this.championInfo
-      }
-    }
+import type { Ref } from 'vue'
+import type { Champion } from '../types/Champion'
+
+const baseURL = 'https://ddragon.leagueoflegends.com/cdn/12.22.1/img/champion/'
+const imgExtension = '.png'
+let champion: Ref<Champion> = {} as Ref<Champion>
+let championName = "" 
+let imageURL = ""
+let championAttributes = ref({})
+
+const props = defineProps({
+  id: {
+    type: String,
+    required: true
   }
+})
+
+function getChampionById(id: string) {
+  ChampionService.getChampionById (id)
+    .then((response: { data: Champion }) => {
+      champion.value = response.data
+      fetchChampionProperties (Object.keys(champion.value.data)[0])
+    })
+    .catch((error: any) => {
+      console.log(error)
+    })
 }
+
+function fetchChampionProperties (championKey: string) {
+  championName = champion.value.data[championKey].id
+  imageURL = baseURL + championName + imgExtension
+  championAttributes.value = champion.value.data[championKey].stats
+}
+
+function goBack () {
+  return window.history.back()
+}
+
+onBeforeMount(() => {
+  getChampionById(props.id)
+})
+
 </script>
