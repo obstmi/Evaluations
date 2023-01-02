@@ -13,7 +13,8 @@
   </header>
 
   <RouterView />
-  <scale-app-footer claim-lang="de" :logoHref="telekomHomeUrl" :footerNavigation="footerNavigation"></scale-app-footer>
+  <!-- https://vuejs.org/guide/extras/web-components.html#using-custom-elements-in-vue -->
+  <scale-app-footer claim-lang="de" :logoHref.prop="telekomHomeUrl" :footerNavigation.prop="footerNavigation"></scale-app-footer>
 </template>
 
 <script setup lang="ts">
