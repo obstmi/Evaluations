@@ -37,7 +37,8 @@ const footerNavigation = [
     id: 'Impressum',
     href: 'https://www.telekom.de/start/impressum'
   },
-  { name: 'Datensschutz',
+  {
+    name: 'Datensschutz',
     id: 'Data privacy',
     href: 'https://www.telekom.de/datenschutz-ganz-einfach',
     icon: 'alert-imprint-dataprivacy'
