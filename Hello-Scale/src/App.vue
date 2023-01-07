@@ -1,31 +1,63 @@
 <template>
   <scale-app-shell>
     <scale-app-header slot="header" id="header">
-      <div slot="menu-main">
-        <scale-nav-main name="Custom Item #1"></scale-nav-main>
-        <scale-nav-main name="Custom Item #2"></scale-nav-main>
-        <scale-nav-main name="Custom Item #3"></scale-nav-main>
-        <scale-nav-main name="Custom Item #4"></scale-nav-main>
+      <div slot="menu-sector">
+        <scale-nav-segment
+          active="true"
+          href="#sector-navigation-1"
+          @click="clickme = !clickme"
+        >
+          {{ sectorNavigation1 }}
+        </scale-nav-segment>
+      </div>
+      <div slot="menu-main" v-for="(navItem, index) in navItems" :key="index">
+        <scale-nav-main :name="navItem" @click="clickme = !clickme"></scale-nav-main>
       </div>
     </scale-app-header>
-    <div>
-      <img alt="Vue logo" src="@/assets/logo.svg" width="125" height="125" />
-      <HelloWorld msg="You did it!" />
-    </div>
-    <scale-app-footer slot="footer" id="footer" claim-lang="de" :logoHref.prop="telekomHomeUrl" :footerNavigation.prop="footerNavigation"></scale-app-footer>
+    <section>
+      <scale-notification-message v-if="clickme" variant="success" opened>
+        {{ notificationMessage }}
+      </scale-notification-message>
+
+      <img alt="Vue logo" src="@/assets/Hugo.png" />
+        <MyFirstComponent msg="You did it!" />
+    </section>
+
+    <scale-app-footer
+      slot="footer"
+      id="footer"
+      claim-lang="de"
+      :logoHref.prop="telekomHomeUrl"
+      :footerNavigation.prop="footerNavigation"
+    ></scale-app-footer>
 
   </scale-app-shell>
 </template>
 
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import { ref } from 'vue'
+import MyFirstComponent from './components/MyFirstComponent.vue'
 
+// Header
+const navItems = [
+  'Team Hugo',
+  'Gigabit',
+  'Miscelleanous'
+]
+
+const sectorNavigation1 = 'HappyNewYear'
+
+// Click-Event-Handler
+const clickme = ref(false)
+const notificationMessage = '*** Happy New Year Team Hugo ***'
+
+// Footer
 const telekomHomeUrl = 'https://www.telekom.de/start'
 const footerNavigation = [
   {
     name: 'Kontaktformular',
     id: 'Contact',
-    href: 'https://www.telekom.de/hilfe'
+    href: 'https://www.telekom.de/hilfe',
   },
   {
     name: 'Nutzungsbedingungen',
@@ -47,4 +79,16 @@ const footerNavigation = [
 </script>
 
 <style scoped>
+section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: end;
+}
+
+img {
+  width: 100%;
+  max-width: 500px;
+}
+
 </style>
