@@ -1,6 +1,7 @@
 {
   "name": "hello-new-year",
   "version": "0.0.0",
+  "license": "MPL-2.0",
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check build-only",

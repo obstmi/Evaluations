@@ -57,7 +57,7 @@ const footerNavigation = [
   {
     name: 'Kontaktformular',
     id: 'Contact',
-    href: 'https://www.telekom.de/hilfe',
+    href: 'https://www.telekom.de/hilfe'
   },
   {
     name: 'Nutzungsbedingungen',
